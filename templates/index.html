@@ -1,0 +1,87 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频格式转换器</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>视频格式转换器</h1>
+        
+        <div class="main-content">
+            <!-- 左侧：文件选择和设置 -->
+            <div class="settings-panel">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <i class="upload-icon">📁</i>
+                        <p>拖放视频文件到这里，或点击选择文件</p>
+                        <input type="file" id="fileInput" accept=".mp4,.avi,.mkv,.mov,.webm" style="display: none;">
+                        <button onclick="document.getElementById('fileInput').click()">选择文件</button>
+                    </div>
+                </div>
+
+                <div class="conversion-settings" id="conversionSettings" style="display: none;">
+                    <h3>转换设置</h3>
+                    
+                    <div class="setting-group">
+                        <label>输出格式:</label>
+                        <select id="formatSelect">
+                            <option value="gif">GIF</option>
+                            <option value="apng">APNG</option>
+                            <option value="webp">WebP</option>
+                            <option value="avif">AVIF</option>
+                        </select>
+                    </div>
+
+                    <div class="setting-group">
+                        <label>分辨率缩放: <span id="scaleValue">100%</span></label>
+                        <input type="range" id="scaleSlider" min="10" max="100" value="100" step="5">
+                    </div>
+
+                    <div class="setting-group">
+                        <label>帧率 (FPS):</label>
+                        <input type="number" id="fpsInput" min="1" max="60" value="15" placeholder="自动">
+                    </div>
+
+                    <div class="setting-group" id="qualityGroup">
+                        <label>质量: <span id="qualityValue">80</span></label>
+                        <input type="range" id="qualitySlider" min="1" max="100" value="80">
+                    </div>
+
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="targetSizeCheckbox"> 目标文件大小
+                        </label>
+                        <input type="number" id="targetSizeInput" min="1" placeholder="字节" disabled>
+                        <select id="targetSizeUnit" disabled>
+                            <option value="1">字节</option>
+                            <option value="1024">KB</option>
+                            <option value="1048576">MB</option>
+                        </select>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="backBtn" onclick="resetFileSelection()">选择其他文件</button>
+                        <button id="convertBtn" onclick="startConversion()">开始转换</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧：通知区域 -->
+            <div class="notification-panel">
+                <h3>转换记录</h3>
+                <div class="notifications-container" id="notificationsContainer">
+                    <div class="notification empty">
+                        暂无转换记录
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
